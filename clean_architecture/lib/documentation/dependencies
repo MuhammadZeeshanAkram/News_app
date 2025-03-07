@@ -220,3 +220,20 @@ BlocProvider(
   child: ChatScreen(),
 )
 ✔ BLoC handles state changes like sending/receiving messages.
+
+What is Dio in Flutter?
+Dio is a powerful HTTP client for Dart, used in Flutter apps to make network requests (like fetching data from an API). It is an alternative to Flutter’s built-in http package but provides more features like:
+
+Automatic JSON serialization
+Interceptors (for modifying requests and responses)
+Better error handling
+File uploading/downloading
+Timeout and cancellation support
+Why is Dio Used in data_state.dart?
+In your data_state.dart file, DioException (previously DioError) is used to handle API failures:
+
+dart
+Copy
+Edit
+final DioException? error;
+This helps in capturing and managing HTTP request errors properly instead of just returning a generic failure.

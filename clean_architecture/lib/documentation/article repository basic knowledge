@@ -1,0 +1,61 @@
+The **`article_repository.dart`** inside the **business layer** (`features/daily_news/business/repository/article_repository.dart`) is defining an **abstract contract** for how articles should be fetched.  
+
+### **What Does It Do?**
+- It provides a **blueprint** (an abstract class) that the **data layer** must implement.
+- It ensures that the business logic is **decoupled** from the actual data-fetching method.
+- It helps maintain the **Dependency Inversion Principle (DIP)** in **Clean Architecture**.
+
+---
+
+### **Code Breakdown**
+```dart
+abstract class ArticleRepository {
+  Future<DataState<List<ArticleEntity>>> getNewsArticles();
+}
+```
+
+#### **What’s Happening Here?**
+- `abstract class ArticleRepository`:  
+  - This means `ArticleRepository` **does not contain an implementation**.  
+  - It only defines **what** should be done, not **how** it should be done.
+- `Future<DataState<List<ArticleEntity>>> getNewsArticles();`  
+  - This declares a method `getNewsArticles()`, which:
+    - Returns a `Future`, meaning it will perform an **asynchronous** operation.
+    - Returns a `DataState<List<ArticleEntity>>`, which:
+      - Likely **wraps API response data** with possible success or failure states.
+      - Uses `ArticleEntity` (a **business layer model**) instead of raw data.
+
+---
+
+### **Who Implements It?**
+The actual **implementation** is in the **data layer** (inside `article_repository_impl.dart`).
+
+```dart
+class ArticleRepositoryImpl implements ArticleRepository {
+  @override
+  Future<DataState<List<ArticleEntity>>> getNewsArticles() {
+    // API call or database fetch logic will go here
+    throw UnimplementedError();
+  }
+}
+```
+- This class **implements** `ArticleRepository`.
+- It **fetches data** from an API or local database.
+- The result is **converted** into `ArticleEntity` for the business layer.
+
+---
+
+### **Why Do This Instead of Calling APIs Directly?**
+✅ **Encapsulation** – Business logic doesn't care **how** data is fetched.  
+✅ **Easier Testing** – We can create **mock repositories** for unit tests.  
+✅ **Flexibility** – If we switch from an API to local storage, we only update the **implementation** without affecting the business logic.  
+
+---
+
+### **Conclusion**
+- **`article_repository.dart`** is an **abstract repository** in the business layer.
+- **It defines how articles should be fetched** but doesn’t implement it.
+- **`article_repository_impl.dart`** in the data layer **implements** this contract.
+- This structure follows **Clean Architecture** principles.
+
+Would you like me to help implement the repository fully? 🚀

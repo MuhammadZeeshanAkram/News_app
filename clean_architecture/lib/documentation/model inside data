@@ -1,0 +1,51 @@
+### **Why Use `ArticleModel` in the Data Layer Instead of `ArticleEntity` from the Business Layer?**
+
+In **Clean Architecture**, we separate concerns between different layers. Here’s why `ArticleModel` is used in the **data layer** instead of directly using `ArticleEntity` from the **business layer**:
+
+---
+
+### **1. Separation of Concerns**
+- The **business layer** should only deal with **entities** (`ArticleEntity`), which represent pure business logic and are independent of external sources like APIs or databases.
+- The **data layer** interacts with external sources like **APIs, databases, or local storage**, so it needs a **model** (`ArticleModel`) to handle data transformation.
+
+---
+
+### **2. `ArticleModel` Handles JSON Conversion**
+- `ArticleEntity` is a **plain entity** that does not depend on JSON.
+- `ArticleModel` **extends** `ArticleEntity` but adds a factory constructor (`fromJson`) to convert API responses into Dart objects.
+
+```dart
+factory ArticleModel.fromJson(Map<String, dynamic> map) {
+  return ArticleModel(
+    author: map['author'] ?? "",
+    title: map['title'] ?? "",
+    description: map['description'] ?? "",
+    url: map['url'] ?? "",
+    urlToImage: map['urlToImage'] ?? "",
+    publishedAt: map['publishedAt'] ?? "",
+    content: map['content'] ?? "",
+  );
+}
+```
+- This ensures that **only the data layer** is responsible for handling external data formats.
+
+---
+
+### **3. Flexibility & Maintainability**
+- If API responses change (e.g., new fields are added), you only need to **update `ArticleModel`** without affecting `ArticleEntity` in the business layer.
+- If you later switch from an API to a local database (SQLite, Hive), you can **modify `ArticleModel`** without affecting your business logic.
+
+---
+
+### **4. Avoiding Data Layer Dependencies in Business Layer**
+- If `ArticleEntity` were used directly inside the data layer, it would **force the business layer to depend on API-specific details**.
+- By keeping **models in the data layer** and **entities in the business layer**, we maintain **a clean separation**.
+
+---
+
+### **Conclusion**
+✅ `ArticleModel` acts as a **Data Transfer Object (DTO)** to map API responses.  
+✅ `ArticleEntity` is used only in the **business layer** for **pure domain logic**.  
+✅ This keeps the **business layer independent** of external data formats and makes the **app easier to maintain**.
+
+Would you like help implementing a **toJson()** method as well? 🚀

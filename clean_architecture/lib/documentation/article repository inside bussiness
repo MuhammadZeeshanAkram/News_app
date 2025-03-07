@@ -1,0 +1,27 @@
+After `entities`, you have the `repository` folder inside `features/daily_news/business/`. Inside this folder, you have the `article_repository.dart` file, which contains the `ArticleRepository` abstract class.
+
+This class is an **interface** that defines a contract for fetching news articles. It specifies a method:
+
+```dart
+Future<DataState<List<ArticleEntity>>> getNewsArticles();
+```
+
+### **Breakdown**
+1. **`Future<DataState<List<ArticleEntity>>>`**  
+   - This means the function will return a `Future`, indicating an asynchronous operation.
+   - The returned data will be wrapped inside `DataState`, which helps handle both success and failure cases.
+   - The actual data is a `List<ArticleEntity>`, meaning a list of news articles.
+
+2. **`getNewsArticles();`**  
+   - This is an abstract method, meaning any class implementing `ArticleRepository` **must** define how to fetch news articles.
+
+### **Why Use an Abstract Repository?**
+- It enforces a clear separation between **data sources** (e.g., API, local database) and **business logic**.
+- It allows different implementations (e.g., fetching from an API vs. fetching from a local database).
+- It follows the **Dependency Inversion Principle** in Clean Architecture.
+
+### **Next Steps**
+- You will create an **implementation** of this repository, e.g., `ArticleRepositoryImpl`, which fetches the actual data from an API or local database.
+- This implementation will handle API requests using **Dio** or any HTTP client.
+
+Would you like help in implementing `ArticleRepositoryImpl`? 🚀

@@ -1,0 +1,32 @@
+1. Core Layer Purpose
+The Core layer contains shared logic used throughout the app.
+It doesn’t belong to a specific feature but is reusable across multiple features.
+2. Purpose of resources Folder
+The resources/ folder holds common utilities like:
+data_state.dart → To standardize API responses (Success/Failure states).
+Constants, enums, or helper functions (if needed).
+3. What data_state.dart Does?
+Encapsulates API responses into two states:
+DataSuccess<T> → When API call succeeds.
+DataFailed<T> → When API call fails.
+Prevents redundant error handling across different features.
+4. Why Is This Useful?
+Instead of writing separate success/error handling in every feature, all API responses follow a consistent structure.
+If API behavior changes (e.g., adding new error handling), you only update this file rather than modifying all features.
+
+What is Dio in Flutter?
+Dio is a powerful HTTP client for Dart, used in Flutter apps to make network requests (like fetching data from an API). It is an alternative to Flutter’s built-in http package but provides more features like:
+
+Automatic JSON serialization
+Interceptors (for modifying requests and responses)
+Better error handling
+File uploading/downloading
+Timeout and cancellation support
+Why is Dio Used in data_state.dart?
+In your data_state.dart file, DioException (previously DioError) is used to handle API failures:
+
+dart
+Copy
+Edit
+final DioException? error;
+This helps in capturing and managing HTTP request errors properly instead of just returning a generic failure.

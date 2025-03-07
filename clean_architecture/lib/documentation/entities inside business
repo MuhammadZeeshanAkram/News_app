@@ -1,0 +1,127 @@
+the entity is the article of the news
+
+This code defines a Dart class called `ArticleEntity` that represents an article. It extends `Equatable`, which is used to make value comparison easier in Dart.
+
+---
+
+### **Code Breakdown**
+
+#### **1. Importing Equatable**
+```dart
+import 'package:equatable/equatable.dart';
+```
+- This imports the `equatable` package, which allows us to compare objects based on their values rather than memory reference.
+- Normally, in Dart, two instances of a class are considered different even if they contain the same values. `Equatable` fixes this by enabling deep comparison.
+
+---
+
+#### **2. Defining the `ArticleEntity` Class**
+```dart
+class ArticleEntity extends Equatable {
+```
+- `ArticleEntity` is a data model representing an article.
+- It extends `Equatable`, meaning we can compare two articles based on their content.
+
+---
+
+#### **3. Declaring Properties**
+```dart
+  final int? id;
+  final String? author;
+  final String? title;
+  final String? description;
+  final String? url;
+  final String? urlToImage;
+  final String? publishedAt;
+  final String? content;
+```
+- These are the properties of an article.
+- All fields are marked as `final`, meaning they cannot be changed after initialization.
+- The `?` (nullable type) means these fields can have `null` values.
+
+**Explanation of Properties:**
+- `id` → The unique identifier for the article.
+- `author` → The name of the article's author.
+- `title` → The title of the article.
+- `description` → A short summary of the article.
+- `url` → The link to the full article.
+- `urlToImage` → The URL of an image related to the article.
+- `publishedAt` → The date and time when the article was published.
+- `content` → The full content of the article.
+
+---
+
+#### **4. Defining the Constructor**
+```dart
+  const ArticleEntity({
+    this.id,
+    this.author,
+    this.title,
+    this.description,
+    this.url,
+    this.urlToImage,
+    this.publishedAt,
+    this.content,
+  });
+```
+- This is the constructor of the class, used to initialize the object with values.
+- The `const` keyword ensures that if two objects have the same values, they will be treated as the same instance in memory.
+- The parameters are optional (because of `this.` with nullable types).
+
+---
+
+#### **5. Overriding `props` for Value Comparison**
+```dart
+  @override
+  List<Object?> get props {
+    return [
+      id,
+      author,
+      title,
+      description,
+      url,
+      urlToImage,
+      publishedAt,
+      content,
+    ];
+  }
+```
+- `props` is a getter that returns a list of properties that should be used for comparison.
+- This is required by `Equatable`, allowing two `ArticleEntity` instances to be considered equal if all their fields are the same.
+- If two objects have the same `id`, `title`, `author`, etc., they will be considered **equal**.
+
+---
+
+### **Why Use Equatable?**
+Normally in Dart:
+```dart
+var article1 = ArticleEntity(id: 1, title: "News");
+var article2 = ArticleEntity(id: 1, title: "News");
+
+print(article1 == article2); // false (Different objects in memory)
+```
+With `Equatable`, the same comparison:
+```dart
+class ArticleEntity extends Equatable { ... }
+
+print(article1 == article2); // true (Same values, so considered equal)
+```
+
+---
+
+### **Use Case**
+This class is useful for managing news articles in an app, such as:
+- Storing articles in a list.
+- Comparing two articles.
+- Fetching and displaying articles in a Flutter app.
+
+---
+
+### **Summary**
+- `ArticleEntity` is a data model for an article.
+- `Equatable` allows value-based comparison.
+- Properties are final and nullable.
+- `props` enables proper equality checking.
+- The constructor initializes values.
+
+Let me know if you need further clarification! 🚀
